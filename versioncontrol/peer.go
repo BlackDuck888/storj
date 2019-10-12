@@ -231,7 +231,7 @@ func (versions Versions) ValidateRollouts(log *zap.Logger) error {
 			log.Warn("non-binary field in versions config struct", zap.String("field name", value.Type().Field(i).Name))
 			continue
 		}
-		if err := binary.Rollout.Validate(value.Type().Field(i - 1).Name, log); err != nil {
+		if err := binary.Rollout.Validate(value.Type().Field(i-1).Name, log); err != nil {
 			validationErrs.Add(err)
 		}
 	}
