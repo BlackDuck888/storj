@@ -200,11 +200,6 @@ func (v Info) Proto() (*pb.NodeVersion, error) {
 	}, nil
 }
 
-// isAcceptedVersion compares and checks if the passed version is greater/equal than the minimum required version
-func isAcceptedVersion(test SemVer, target SemVer) bool {
-	return test.Major > target.Major || (test.Major == target.Major && (test.Minor > target.Minor || (test.Minor == target.Minor && test.Patch >= target.Patch)))
-}
-
 func init() {
 	if buildVersion == "" && buildTimestamp == "" && buildCommitHash == "" && buildRelease == "" {
 		return

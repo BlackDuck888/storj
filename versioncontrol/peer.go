@@ -74,6 +74,8 @@ type Rollout struct {
 }
 
 // Peer is the representation of a VersionControl Server.
+//
+// architecture: Peer
 type Peer struct {
 	// core dependencies
 	Log *zap.Logger
@@ -224,12 +226,12 @@ func (versions Versions) ValidateRollouts(log *zap.Logger) error {
 	fieldCount := value.NumField()
 	validationErrs := errs.Group{}
 	for i := 1; i < fieldCount; i++ {
-		binary, ok := value.Field(i).Interface().(Binary)
+		binary, ok := value.Field(i - 1).Interface().(Binary)
 		if !ok {
 			log.Warn("non-binary field in versions config struct", zap.String("field name", value.Type().Field(i).Name))
 			continue
 		}
-		if err := binary.Rollout.Validate(value.Type().Field(i).Name, log); err != nil {
+		if err := binary.Rollout.Validate(value.Type().Field(i - 1).Name, log); err != nil {
 			validationErrs.Add(err)
 		}
 	}
