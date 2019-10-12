@@ -13,8 +13,6 @@ import (
 	"time"
 
 	"github.com/zeebo/errs"
-	"gopkg.in/spacemonkeygo/monkit.v2"
-
 	"storj.io/storj/pkg/pb"
 )
 
@@ -26,8 +24,6 @@ const (
 )
 
 var (
-	mon = monkit.Package()
-
 	verError = errs.Class("version error")
 	// the following fields are set by linker flags. if any of them
 	// are set and fail to parse, the program will fail to start
