@@ -8,6 +8,7 @@ import (
 	"net"
 	"net/mail"
 	"net/smtp"
+	"storj.io/storj/internal/version/checker"
 
 	"github.com/zeebo/errs"
 	"go.uber.org/zap"
@@ -44,14 +45,13 @@ import (
 	"storj.io/storj/satellite/repair/irreparable"
 	"storj.io/storj/satellite/repair/repairer"
 	"storj.io/storj/satellite/vouchers"
-	"storj.io/storj/versioncontrol"
 )
 
 // APIConfig is the global config for the satellite API process
 type APIConfig struct {
 	Identity identity.Config
 	Server   server.Config
-	Version  versioncontrol.ServiceConfig
+	Version  checker.Config
 
 	Contact contact.Config
 	Overlay overlay.Config
@@ -79,7 +79,7 @@ type API struct {
 
 	Dialer  rpc.Dialer
 	Server  *server.Server
-	Version *versioncontrol.Service
+	Version *checker.Service
 
 	Contact struct {
 		Service   *contact.Service
@@ -160,7 +160,7 @@ func NewAPI(log *zap.Logger, full *identity.FullIdentity, db DB, revocationDB ex
 			peer.Log.Sugar().Debugf("Binary Version: %s with CommitHash %s, built at %s as Release %v",
 				versionInfo.Version.String(), versionInfo.CommitHash, versionInfo.Timestamp.String(), versionInfo.Release)
 		}
-		peer.Version = versioncontrol.NewService(log.Named("version"), config.Version, versionInfo, "Satellite")
+		peer.Version = checker.NewService(log.Named("version"), config.Version, versionInfo, "Satellite")
 	}
 
 	{ // setup listener and server
