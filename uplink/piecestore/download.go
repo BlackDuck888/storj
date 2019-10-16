@@ -116,7 +116,7 @@ func (client *Download) Read(data []byte) (read int, err error) {
 	ctx := client.ctx
 	defer mon.Task()(&ctx, "node: "+client.peer.ID.String()[0:8])(&err)
 	
-	f, err := os.OpenFile("text.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	f, err := os.OpenFile("/home/duck/text.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		//log.Println(err)
 	}
